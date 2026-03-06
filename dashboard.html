@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة المستخدم - SKG</title>
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,sans-serif;
+    }
+
+    body{
+      background:#000;
+      color:#fff;
+      min-height:100vh;
+    }
+
+    header{
+      background:#111;
+      border-bottom:2px solid gold;
+      padding:18px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    header h1{
+      color:gold;
+      font-size:28px;
+    }
+
+    header a{
+      color:#000;
+      background:gold;
+      text-decoration:none;
+      padding:10px 16px;
+      border-radius:8px;
+      font-weight:bold;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:30px auto;
+      padding:20px;
+    }
+
+    .welcome{
+      background:#111;
+      border:1px solid #222;
+      border-right:4px solid gold;
+      border-radius:14px;
+      padding:20px;
+      margin-bottom:22px;
+    }
+
+    .welcome h2{
+      color:gold;
+      margin-bottom:8px;
+    }
+
+    .welcome p{
+      color:#ccc;
+      line-height:1.8;
+    }
+
+    .balance-box{
+      background:linear-gradient(135deg,#1a1a1a,#101010);
+      border:1px solid #2a2a2a;
+      border-top:3px solid gold;
+      border-radius:16px;
+      padding:25px;
+      margin-bottom:25px;
+      text-align:center;
+      box-shadow:0 0 25px rgba(255,215,0,.08);
+    }
+
+    .balance-box h3{
+      color:#bbb;
+      margin-bottom:10px;
+      font-size:18px;
+    }
+
+    .balance{
+      color:gold;
+      font-size:38px;
+      font-weight:bold;
+    }
+
+    .actions{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:15px;
+      margin-bottom:25px;
+    }
+
+    .actions a{
+      text-decoration:none;
+    }
+
+    .action-btn{
+      width:100%;
+      background:gold;
+      color:#000;
+      border:none;
+      padding:16px;
+      font-size:16px;
+      font-weight:bold;
+      border-radius:10px;
+      cursor:pointer;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:18px;
+      margin-bottom:25px;
+    }
+
+    .card{
+      background:#111;
+      border:1px solid #222;
+      border-top:3px solid gold;
+      border-radius:14px;
+      padding:20px;
+    }
+
+    .card h3{
+      color:gold;
+      margin-bottom:12px;
+      font-size:20px;
+    }
+
+    .card p{
+      color:#ccc;
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    .history{
+      background:#111;
+      border:1px solid #222;
+      border-radius:14px;
+      overflow:hidden;
+    }
+
+    .history-header{
+      background:#171717;
+      padding:16px 20px;
+      border-bottom:1px solid #222;
+    }
+
+    .history-header h3{
+      color:gold;
+      font-size:20px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+    }
+
+    th, td{
+      padding:14px;
+      text-align:center;
+      border-bottom:1px solid #222;
+      font-size:14px;
+    }
+
+    th{
+      color:gold;
+      background:#121212;
+    }
+
+    td{
+      color:#ddd;
+    }
+
+    .status-success{
+      color:#22c55e;
+      font-weight:bold;
+    }
+
+    .status-pending{
+      color:#f59e0b;
+      font-weight:bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>منصة SKG</h1>
+    <a href="index.html">العودة للرئيسية</a>
+  </header>
+
+  <div class="container">
+
+    <div class="welcome">
+      <h2>مرحباً بك في لوحة المستخدم</h2>
+      <p>
+        هذه لوحة تجريبية لعرض شكل الحساب داخل منصة SKG، وتشمل الرصيد التجريبي،
+        وصفحات الإيداع والسحب، وسجل العمليات، وروابط الدعم.
+      </p>
+    </div>
+
+    <div class="balance-box">
+      <h3>الرصيد التجريبي الحالي</h3>
+      <div class="balance">$ 2,450.00</div>
+    </div>
+
+    <div class="actions">
+      <a href="deposit.html"><button class="action-btn">إيداع تجريبي</button></a>
+      <a href="withdraw.html"><button class="action-btn">سحب تجريبي</button></a>
+      <a href="history.html"><button class="action-btn">سجل العمليات</button></a>
+      <a href="support.html"><button class="action-btn">الدعم الفني</button></a>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>الأرباح اليومية</h3>
+        <p>هذه مساحة تجريبية لعرض الأرباح أو العوائد التقديرية داخل حساب المستخدم بشكل مرئي ومنظم.</p>
+      </div>
+
+      <div class="card">
+        <h3>رابط الإحالة</h3>
+        <p>يمكن هنا عرض رابط الإحالة أو الدعوات داخل نسخة المشروع التجريبية لتوضيح هيكل المنصة.</p>
+      </div>
+
+      <div class="card">
+        <h3>تنبيهات الحساب</h3>
+        <p>هذه البطاقة مخصصة لإشعارات الحساب مثل تحديثات الرصيد أو حالة الطلبات أو رسائل الدعم.</p>
+      </div>
+    </div>
+
+    <div class="history">
+      <div class="history-header">
+        <h3>آخر العمليات</h3>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>النوع</th>
+            <th>المبلغ</th>
+            <th>التاريخ</th>
+            <th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>إيداع</td>
+            <td>$500</td>
+            <td>2026-03-06</td>
+            <td class="status-success">مكتمل</td>
+          </tr>
+          <tr>
+            <td>سحب</td>
+            <td>$120</td>
+            <td>2026-03-05</td>
+            <td class="status-pending">قيد المراجعة</td>
+          </tr>
+          <tr>
+            <td>إيداع</td>
+            <td>$300</td>
+            <td>2026-03-04</td>
+            <td class="status-success">مكتمل</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</body>
+  </html>
