@@ -4,410 +4,207 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>لوحة الأدمن - SKG</title>
-
   <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:Arial,sans-serif;
+    *{box-sizing:border-box;font-family:Arial,sans-serif}
+    body{margin:0;background:#000;color:#fff;padding:20px}
+    .wrap{max-width:1100px;margin:auto}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+    .top h1{color:gold;margin:0}
+    .top a,.top button{
+      background:gold;color:#000;border:none;border-radius:8px;
+      padding:10px 14px;font-weight:bold;text-decoration:none;cursor:pointer
     }
-
-    body{
-      background:#000;
-      color:#fff;
-      min-height:100vh;
-      padding:30px;
-    }
-
-    header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:30px;
-      border-bottom:2px solid gold;
-      padding-bottom:12px;
-    }
-
-    h1{
-      color:gold;
-      font-size:30px;
-    }
-
-    .back-link{
-      color:#000;
-      background:gold;
-      text-decoration:none;
-      padding:10px 16px;
-      border-radius:8px;
-      font-weight:bold;
-    }
-
-    .container{
-      max-width:1100px;
-      margin:auto;
-    }
-
-    .top-box{
-      background:#111;
-      border:1px solid #222;
-      border-right:4px solid gold;
-      border-radius:14px;
-      padding:20px;
-      margin-bottom:22px;
-    }
-
-    .top-box h2{
-      color:gold;
-      margin-bottom:10px;
-      font-size:24px;
-    }
-
-    .top-box p{
-      color:#ccc;
-      line-height:1.8;
-      font-size:14px;
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:16px;
-      margin-bottom:25px;
-    }
-
-    .stat{
-      background:#111;
-      border:1px solid #222;
-      border-top:3px solid gold;
-      border-radius:12px;
-      padding:18px;
-      text-align:center;
-    }
-
-    .stat h3{
-      color:#bbb;
-      font-size:16px;
-      margin-bottom:10px;
-    }
-
-    .stat .value{
-      color:gold;
-      font-size:30px;
-      font-weight:bold;
-    }
-
-    .search-box{
-      background:#111;
-      border:1px solid #222;
-      border-radius:14px;
-      padding:20px;
-      margin-bottom:25px;
-    }
-
-    .search-box h3{
-      color:gold;
-      margin-bottom:14px;
-    }
-
-    .search-row{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-
-    .search-row input{
-      flex:1;
-      min-width:220px;
-      padding:12px;
-      background:#1b1b1b;
-      border:1px solid #2a2a2a;
-      color:#fff;
-      border-radius:8px;
-      outline:none;
-    }
-
-    .search-row button{
-      padding:12px 18px;
-      background:gold;
-      color:#000;
-      border:none;
-      border-radius:8px;
-      font-weight:bold;
-      cursor:pointer;
-    }
-
-    .panel{
-      background:#111;
-      border:1px solid #222;
-      border-radius:14px;
-      overflow:hidden;
-      margin-bottom:25px;
-    }
-
-    .panel-header{
-      background:#171717;
-      padding:16px 20px;
-      border-bottom:1px solid #222;
-    }
-
-    .panel-header h3{
-      color:gold;
-      font-size:20px;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-    }
-
-    th, td{
-      padding:14px;
-      text-align:center;
-      border-bottom:1px solid #222;
-      font-size:14px;
-    }
-
-    th{
-      color:gold;
-      background:#121212;
-    }
-
-    td{
-      color:#ddd;
-    }
-
-    .ok{
-      color:#22c55e;
-      font-weight:bold;
-    }
-
-    .pending{
-      color:#f59e0b;
-      font-weight:bold;
-    }
-
-    .blocked{
-      color:#ef4444;
-      font-weight:bold;
-    }
-
-    .actions{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:18px;
-    }
-
     .card{
-      background:#111;
-      border:1px solid #222;
-      border-top:3px solid gold;
-      border-radius:14px;
-      padding:20px;
+      background:#111;border:1px solid #222;border-top:3px solid gold;
+      border-radius:14px;padding:18px;margin-bottom:18px
     }
-
-    .card h3{
-      color:gold;
-      margin-bottom:12px;
-      font-size:20px;
+    .card h2{margin:0 0 10px;color:gold;font-size:22px}
+    .note{color:#bbb;line-height:1.7;font-size:14px}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:18px}
+    .stat{background:#111;border:1px solid #222;border-top:3px solid gold;border-radius:12px;padding:16px;text-align:center}
+    .stat .v{color:gold;font-size:30px;font-weight:bold}
+    .stat .k{color:#bbb;margin-top:6px}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .toolbar button{
+      background:#333;color:#fff;border:none;border-radius:8px;padding:10px 12px;cursor:pointer
     }
-
-    .card input,
-    .card select{
-      width:100%;
-      padding:12px;
-      margin-top:10px;
-      background:#1b1b1b;
-      border:1px solid #2a2a2a;
-      color:#fff;
-      border-radius:8px;
-      outline:none;
+    .table-wrap{overflow-x:auto;border:1px solid #222;border-radius:12px}
+    table{width:100%;border-collapse:collapse;min-width:900px;background:#111}
+    th,td{padding:12px;text-align:center;border-bottom:1px solid #222;font-size:14px;vertical-align:top}
+    th{background:#171717;color:gold}
+    td{color:#ddd}
+    .small{font-size:12px;color:#aaa;word-break:break-all}
+    .pending{color:#f59e0b;font-weight:bold}
+    .approved{color:#22c55e;font-weight:bold}
+    .rejected{color:#ef4444;font-weight:bold}
+    .row-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+    .approve,.reject{
+      border:none;border-radius:8px;padding:8px 10px;font-weight:bold;cursor:pointer
     }
-
-    .card button{
-      width:100%;
-      padding:12px;
-      margin-top:12px;
-      background:gold;
-      color:#000;
-      border:none;
-      border-radius:8px;
-      font-weight:bold;
-      cursor:pointer;
-    }
-
-    .note{
-      margin-top:12px;
-      color:#aaa;
-      font-size:13px;
-      line-height:1.7;
-    }
-
-    .hidden{
-      display:none;
-    }
+    .approve{background:#22c55e;color:#000}
+    .reject{background:#ef4444;color:#fff}
   </style>
 </head>
 <body>
 
 <script>
   var password = prompt("ادخل كلمة مرور الأدمن");
-
   if (password !== "obdo0000") {
     document.body.innerHTML = "<h2 style='color:red;text-align:center;margin-top:120px;'>🚫 غير مسموح بالدخول</h2>";
     throw new Error("Access Denied");
   }
 </script>
 
-<div class="container">
-  <header>
+<div class="wrap">
+  <div class="top">
     <h1>لوحة أدمن SKG</h1>
-    <a class="back-link" href="index.html">العودة للموقع</a>
-  </header>
+    <div>
+      <a href="index.html">العودة للموقع</a>
+    </div>
+  </div>
 
-  <div class="top-box">
+  <div class="card">
     <h2>لوحة إدارة تجريبية</h2>
-    <p>
-      هذه لوحة أدمن تجريبية لإدارة مشروع SKG وعرض المستخدمين والطلبات والسجلات بشكل بصري.
-      الحقول والأزرار هنا للعرض والتصميم فقط إلى أن يتم ربطها لاحقاً بقاعدة بيانات.
-    </p>
+    <div class="note">
+      هذه الصفحة تجريبية فقط. تعرض طلبات الإيداع والسحب المحفوظة محليًا داخل المتصفح، ويمكن تغيير حالتها إلى
+      <b>مقبول</b> أو <b>مرفوض</b> لأغراض العرض فقط.
+    </div>
   </div>
 
   <div class="stats">
     <div class="stat">
-      <h3>إجمالي المستخدمين</h3>
-      <div class="value">248</div>
+      <div class="v" id="totalOps">0</div>
+      <div class="k">إجمالي العمليات</div>
     </div>
-
     <div class="stat">
-      <h3>طلبات الإيداع</h3>
-      <div class="value">17</div>
+      <div class="v" id="pendingOps">0</div>
+      <div class="k">قيد المراجعة</div>
     </div>
-
     <div class="stat">
-      <h3>طلبات السحب</h3>
-      <div class="value">9</div>
+      <div class="v" id="approvedOps">0</div>
+      <div class="k">مقبول</div>
     </div>
-
     <div class="stat">
-      <h3>الحسابات المحظورة</h3>
-      <div class="value">4</div>
+      <div class="v" id="rejectedOps">0</div>
+      <div class="k">مرفوض</div>
     </div>
   </div>
 
-  <div class="search-box">
-    <h3>البحث عن مستخدم</h3>
-    <div class="search-row">
-      <input type="text" placeholder="ابحث بالاسم أو البريد الإلكتروني">
-      <button>بحث</button>
+  <div class="card">
+    <h2>إدارة الطلبات</h2>
+    <div class="toolbar">
+      <button onclick="renderOps()">تحديث</button>
+      <button onclick="clearAll()">مسح كل السجل</button>
     </div>
   </div>
 
-  <div class="panel">
-    <div class="panel-header">
-      <h3>آخر المستخدمين</h3>
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>الاسم</th>
-          <th>البريد</th>
-          <th>الرصيد التجريبي</th>
-          <th>الحالة</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>محمد أحمد</td>
-          <td>mohamed@example.com</td>
-          <td>$2,450</td>
-          <td class="ok">نشط</td>
-        </tr>
-        <tr>
-          <td>سارة علي</td>
-          <td>sara@example.com</td>
-          <td>$980</td>
-          <td class="pending">مراجعة</td>
-        </tr>
-        <tr>
-          <td>خالد حسن</td>
-          <td>khaled@example.com</td>
-          <td>$1,320</td>
-          <td class="blocked">محظور</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="panel">
-    <div class="panel-header">
-      <h3>آخر الطلبات</h3>
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>المستخدم</th>
-          <th>النوع</th>
-          <th>المبلغ</th>
-          <th>الحالة</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>محمد أحمد</td>
-          <td>إيداع تجريبي</td>
-          <td>$500</td>
-          <td class="ok">مكتمل</td>
-        </tr>
-        <tr>
-          <td>سارة علي</td>
-          <td>سحب تجريبي</td>
-          <td>$120</td>
-          <td class="pending">قيد المراجعة</td>
-        </tr>
-        <tr>
-          <td>خالد حسن</td>
-          <td>إيداع تجريبي</td>
-          <td>$300</td>
-          <td class="ok">مكتمل</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="actions">
-    <div class="card">
-      <h3>تعديل حالة مستخدم</h3>
-      <input type="text" placeholder="البريد الإلكتروني أو اسم المستخدم">
-      <select>
-        <option>نشط</option>
-        <option>مراجعة</option>
-        <option>محظور</option>
-      </select>
-      <button>حفظ التعديل</button>
-      <div class="note">واجهة تجريبية لتوضيح شكل إدارة حالة المستخدم.</div>
-    </div>
-
-    <div class="card">
-      <h3>تعديل الرصيد التجريبي</h3>
-      <input type="text" placeholder="البريد الإلكتروني أو اسم المستخدم">
-      <input type="number" placeholder="المبلغ">
-      <button>تحديث الرصيد</button>
-      <div class="note">هذه العملية تجريبية لعرض شكل لوحة التحكم فقط.</div>
-    </div>
-
-    <div class="card">
-      <h3>إدارة طلبات الدعم</h3>
-      <input type="text" placeholder="ابحث عن رسالة دعم">
-      <button>عرض الرسائل</button>
-      <div class="note">يمكن لاحقاً ربط هذه الصفحة بقاعدة بيانات ونظام دعم داخلي.</div>
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>النوع</th>
+            <th>الشبكة</th>
+            <th>العنوان</th>
+            <th>المبلغ</th>
+            <th>الحالة</th>
+            <th>التاريخ</th>
+            <th>إجراء</th>
+          </tr>
+        </thead>
+        <tbody id="opsBody"></tbody>
+      </table>
     </div>
   </div>
 </div>
 
+<script>
+  function getOps() {
+    return JSON.parse(localStorage.getItem("skgHistory") || "[]");
+  }
+
+  function saveOps(ops) {
+    localStorage.setItem("skgHistory", JSON.stringify(ops));
+  }
+
+  function formatDate(dateString) {
+    try {
+      return new Date(dateString).toLocaleString("ar-EG");
+    } catch (e) {
+      return dateString || "-";
+    }
+  }
+
+  function statusClass(status) {
+    if (status === "قيد المراجعة") return "pending";
+    if (status === "مقبول") return "approved";
+    if (status === "مرفوض") return "rejected";
+    return "";
+  }
+
+  function approveOp(index) {
+    const ops = getOps();
+    if (!ops[index]) return;
+    ops[index].status = "مقبول";
+    saveOps(ops);
+    renderOps();
+  }
+
+  function rejectOp(index) {
+    const ops = getOps();
+    if (!ops[index]) return;
+    ops[index].status = "مرفوض";
+    saveOps(ops);
+    renderOps();
+  }
+
+  function clearAll() {
+    const ok = confirm("هل تريد مسح كل السجل التجريبي؟");
+    if (!ok) return;
+    localStorage.removeItem("skgHistory");
+    renderOps();
+  }
+
+  function renderOps() {
+    const ops = getOps();
+    const body = document.getElementById("opsBody");
+
+    document.getElementById("totalOps").textContent = ops.length;
+    document.getElementById("pendingOps").textContent = ops.filter(x => x.status === "قيد المراجعة").length;
+    document.getElementById("approvedOps").textContent = ops.filter(x => x.status === "مقبول").length;
+    document.getElementById("rejectedOps").textContent = ops.filter(x => x.status === "مرفوض").length;
+
+    if (!ops.length) {
+      body.innerHTML = `
+        <tr>
+          <td colspan="8" style="color:#aaa;padding:30px;">لا توجد عمليات محفوظة حتى الآن</td>
+        </tr>
+      `;
+      return;
+    }
+
+    body.innerHTML = ops.map((item, index) => `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${item.type || "-"}</td>
+        <td>${item.network || "-"}</td>
+        <td class="small">${item.address || "-"}</td>
+        <td>$${Number(item.amount || 0).toFixed(2)}</td>
+        <td class="${statusClass(item.status)}">${item.status || "-"}</td>
+        <td>${formatDate(item.createdAt)}</td>
+        <td>
+          <div class="row-actions">
+            <button class="approve" onclick="approveOp(${index})">قبول</button>
+            <button class="reject" onclick="rejectOp(${index})">رفض</button>
+          </div>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  renderOps();
+</script>
+
 </body>
-  </html>
+</html>
