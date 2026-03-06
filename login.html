@@ -1,51 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-<title>Login - SKG</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تسجيل الدخول - SKG</title>
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,sans-serif;
+    }
 
-<style>
+    body{
+      background:#000;
+      color:#fff;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
 
-body{
-background:black;
-color:white;
-font-family:Arial;
-text-align:center;
-}
+    .box{
+      width:100%;
+      max-width:420px;
+      background:#111;
+      border:1px solid #222;
+      border-top:3px solid gold;
+      border-radius:14px;
+      padding:30px 22px;
+      box-shadow:0 0 20px rgba(255,215,0,.08);
+    }
 
-.container{
-margin-top:120px;
-}
+    h2{
+      text-align:center;
+      color:gold;
+      margin-bottom:20px;
+      font-size:30px;
+    }
 
-input{
-padding:10px;
-margin:10px;
-width:250px;
-}
+    p{
+      text-align:center;
+      color:#ccc;
+      margin-bottom:22px;
+      line-height:1.7;
+      font-size:14px;
+    }
 
-button{
-padding:12px 20px;
-background:gold;
-border:none;
-cursor:pointer;
-}
+    label{
+      display:block;
+      margin-bottom:7px;
+      margin-top:14px;
+      color:#eee;
+      font-size:14px;
+    }
 
-</style>
+    input{
+      width:100%;
+      padding:13px;
+      border:none;
+      border-radius:8px;
+      background:#1b1b1b;
+      color:#fff;
+      outline:none;
+      border:1px solid #2a2a2a;
+    }
 
+    input:focus{
+      border-color:gold;
+    }
+
+    button{
+      width:100%;
+      margin-top:22px;
+      padding:14px;
+      border:none;
+      border-radius:8px;
+      background:gold;
+      color:#000;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    button:hover{
+      background:#ffd84d;
+    }
+
+    .links{
+      margin-top:18px;
+      text-align:center;
+    }
+
+    .links a{
+      color:gold;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .note{
+      margin-top:16px;
+      background:#181818;
+      border-right:3px solid gold;
+      padding:12px;
+      border-radius:8px;
+      color:#ccc;
+      line-height:1.7;
+      font-size:13px;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+  <div class="box">
+    <h2>تسجيل الدخول</h2>
+    <p>سجل دخولك إلى منصة SKG للوصول إلى لوحة المستخدم التجريبية.</p>
 
-<h2>Login</h2>
+    <label>البريد الإلكتروني</label>
+    <input type="email" placeholder="example@email.com" />
 
-<input type="text" placeholder="Phone Number"><br>
+    <label>كلمة المرور</label>
+    <input type="password" placeholder="اكتب كلمة المرور" />
 
-<input type="password" placeholder="Password"><br>
+    <button onclick="goDashboard()">دخول</button>
 
-<button>Login</button>
+    <div class="links">
+      <a href="register.html">ليس لديك حساب؟ إنشاء حساب</a>
+    </div>
 
-</div>
+    <div class="note">
+      هذه صفحة دخول تجريبية، وسنربطها لاحقاً بنظام تحقق فعلي وتجريبي داخل المشروع.
+    </div>
+  </div>
+
+  <script>
+    function goDashboard() {
+      window.location.href = "dashboard.html";
+    }
+  </script>
 
 </body>
 </html>
