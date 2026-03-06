@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سجل العمليات - SKG</title>
+
+<style>
+
+body{
+background:#000;
+color:#fff;
+font-family:Arial;
+padding:40px;
+text-align:center;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+background:#111;
+padding:25px;
+border-radius:12px;
+border-top:3px solid gold;
+}
+
+h2{
+color:gold;
+margin-bottom:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #333;
+}
+
+th{
+color:gold;
+}
+
+.status-success{
+color:#22c55e;
+font-weight:bold;
+}
+
+.status-pending{
+color:#f59e0b;
+font-weight:bold;
+}
+
+a{
+display:inline-block;
+margin-top:20px;
+color:gold;
+text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>سجل العمليات</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>العملية</th>
+<th>المبلغ</th>
+<th>التاريخ</th>
+<th>الحالة</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>إيداع</td>
+<td>$500</td>
+<td>2026-03-06</td>
+<td class="status-success">مكتمل</td>
+</tr>
+
+<tr>
+<td>سحب</td>
+<td>$120</td>
+<td>2026-03-05</td>
+<td class="status-pending">قيد المراجعة</td>
+</tr>
+
+<tr>
+<td>إيداع</td>
+<td>$300</td>
+<td>2026-03-04</td>
+<td class="status-success">مكتمل</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<a href="dashboard.html">العودة إلى لوحة المستخدم</a>
+
+</div>
+
+</body>
+</html>
