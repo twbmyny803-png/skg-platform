@@ -109,6 +109,21 @@
       line-height:1.7;
       font-size:13px;
     }
+
+    .message{
+      margin-top:14px;
+      text-align:center;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .success{
+      color:#22c55e;
+    }
+
+    .error{
+      color:#ef4444;
+    }
   </style>
 </head>
 <body>
@@ -117,28 +132,94 @@
     <h2>إنشاء حساب</h2>
     <p>أنشئ حسابك التجريبي داخل منصة SKG باستخدام البريد الإلكتروني.</p>
 
-    <label>الاسم الكامل</label>
-    <input type="text" placeholder="اكتب اسمك الكامل" />
+    <form id="registerForm">
+      <label>الاسم الكامل</label>
+      <input id="fullName" type="text" placeholder="اكتب اسمك الكامل" required />
 
-    <label>البريد الإلكتروني</label>
-    <input type="email" placeholder="example@email.com" />
+      <label>البريد الإلكتروني</label>
+      <input id="email" type="email" placeholder="example@email.com" required />
 
-    <label>كلمة المرور</label>
-    <input type="password" placeholder="اكتب كلمة المرور" />
+      <label>كلمة المرور</label>
+      <input id="password" type="password" placeholder="اكتب كلمة المرور" required />
 
-    <label>تأكيد كلمة المرور</label>
-    <input type="password" placeholder="أعد كتابة كلمة المرور" />
+      <label>تأكيد كلمة المرور</label>
+      <input id="confirmPassword" type="password" placeholder="أعد كتابة كلمة المرور" required />
 
-    <button>إنشاء الحساب</button>
+      <button type="submit">إنشاء الحساب</button>
+    </form>
+
+    <div id="message" class="message"></div>
 
     <div class="links">
       <a href="login.html">لديك حساب بالفعل؟ تسجيل الدخول</a>
     </div>
 
     <div class="note">
-      هذه واجهة تجريبية للمشروع، وسيتم لاحقاً ربطها بنظام تحقق عبر البريد الإلكتروني.
+      هذه واجهة تجريبية للمشروع، والتسجيل الآن مربوط بسيرفر SKG API التجريبي.
     </div>
   </div>
+
+  <script>
+    const API_URL = "https://skg-api.onrender.com";
+
+    const form = document.getElementById("registerForm");
+    const messageBox = document.getElementById("message");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      messageBox.className = "message";
+      messageBox.textContent = "";
+
+      if (!fullName || !email || !password || !confirmPassword) {
+        messageBox.classList.add("error");
+        messageBox.textContent = "يرجى تعبئة كل الحقول.";
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        messageBox.classList.add("error");
+        messageBox.textContent = "كلمتا المرور غير متطابقتين.";
+        return;
+      }
+
+      try {
+        const response = await fetch(API_URL + "/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            fullName: fullName,
+            email: email,
+            password: password
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.ok) {
+          messageBox.classList.add("success");
+          messageBox.textContent = "تم إنشاء الحساب بنجاح ✅ سيتم تحويلك إلى صفحة الدخول.";
+
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 1500);
+        } else {
+          messageBox.classList.add("error");
+          messageBox.textContent = data.error || "حدث خطأ أثناء إنشاء الحساب.";
+        }
+      } catch (error) {
+        messageBox.classList.add("error");
+        messageBox.textContent = "تعذر الاتصال بالسيرفر. تأكد أن SKG API يعمل.";
+      }
+    });
+  </script>
 
 </body>
 </html>
