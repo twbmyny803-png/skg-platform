@@ -109,6 +109,21 @@
       line-height:1.7;
       font-size:13px;
     }
+
+    .message{
+      margin-top:14px;
+      text-align:center;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .success{
+      color:#22c55e;
+    }
+
+    .error{
+      color:#ef4444;
+    }
   </style>
 </head>
 <body>
@@ -117,27 +132,79 @@
     <h2>تسجيل الدخول</h2>
     <p>سجل دخولك إلى منصة SKG للوصول إلى لوحة المستخدم التجريبية.</p>
 
-    <label>البريد الإلكتروني</label>
-    <input type="email" placeholder="example@email.com" />
+    <form id="loginForm">
+      <label>البريد الإلكتروني</label>
+      <input id="email" type="email" placeholder="example@email.com" required />
 
-    <label>كلمة المرور</label>
-    <input type="password" placeholder="اكتب كلمة المرور" />
+      <label>كلمة المرور</label>
+      <input id="password" type="password" placeholder="اكتب كلمة المرور" required />
 
-    <button onclick="goDashboard()">دخول</button>
+      <button type="submit">دخول</button>
+    </form>
+
+    <div id="message" class="message"></div>
 
     <div class="links">
       <a href="register.html">ليس لديك حساب؟ إنشاء حساب</a>
     </div>
 
     <div class="note">
-      هذه صفحة دخول تجريبية، وسنربطها لاحقاً بنظام تحقق فعلي وتجريبي داخل المشروع.
+      هذه صفحة دخول تجريبية، وهي الآن مربوطة بسيرفر SKG API التجريبي.
     </div>
   </div>
 
   <script>
-    function goDashboard() {
-      window.location.href = "dashboard.html";
-    }
+    const API_URL = "https://skg-api.onrender.com";
+
+    const form = document.getElementById("loginForm");
+    const messageBox = document.getElementById("message");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      messageBox.className = "message";
+      messageBox.textContent = "";
+
+      if (!email || !password) {
+        messageBox.classList.add("error");
+        messageBox.textContent = "يرجى إدخال البريد الإلكتروني وكلمة المرور.";
+        return;
+      }
+
+      try {
+        const response = await fetch(API_URL + "/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.ok) {
+          localStorage.setItem("skgUser", JSON.stringify(data.user));
+          messageBox.classList.add("success");
+          messageBox.textContent = "تم تسجيل الدخول بنجاح ✅ سيتم تحويلك الآن.";
+
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 1200);
+        } else {
+          messageBox.classList.add("error");
+          messageBox.textContent = data.error || "فشل تسجيل الدخول.";
+        }
+      } catch (error) {
+        messageBox.classList.add("error");
+        messageBox.textContent = "تعذر الاتصال بالسيرفر. تأكد أن SKG API يعمل.";
+      }
+    });
   </script>
 
 </body>
