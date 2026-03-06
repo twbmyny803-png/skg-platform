@@ -1,116 +1,243 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سجل العمليات - SKG</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>سجل العمليات - SKG</title>
 
-<style>
+  <style>
+    *{
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
+    }
 
-body{
-background:#000;
-color:#fff;
-font-family:Arial;
-padding:40px;
-text-align:center;
-}
+    body{
+      margin:0;
+      background:#000;
+      color:#fff;
+      padding:20px;
+    }
 
-.container{
-max-width:800px;
-margin:auto;
-background:#111;
-padding:25px;
-border-radius:12px;
-border-top:3px solid gold;
-}
+    .container{
+      max-width:1000px;
+      margin:auto;
+      background:#111;
+      padding:24px;
+      border-radius:14px;
+      border-top:3px solid gold;
+    }
 
-h2{
-color:gold;
-margin-bottom:20px;
-}
+    h2{
+      color:gold;
+      text-align:center;
+      margin-bottom:10px;
+    }
 
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
-}
+    p{
+      text-align:center;
+      color:#ccc;
+      line-height:1.7;
+      margin-bottom:20px;
+    }
 
-th,td{
-padding:12px;
-border-bottom:1px solid #333;
-}
+    .top-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-bottom:20px;
+    }
 
-th{
-color:gold;
-}
+    .top-actions button,
+    .top-actions a{
+      padding:12px 16px;
+      border:none;
+      border-radius:8px;
+      font-weight:bold;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-block;
+    }
 
-.status-success{
-color:#22c55e;
-font-weight:bold;
-}
+    .primary{
+      background:gold;
+      color:#000;
+    }
 
-.status-pending{
-color:#f59e0b;
-font-weight:bold;
-}
+    .secondary{
+      background:#333;
+      color:#fff;
+    }
 
-a{
-display:inline-block;
-margin-top:20px;
-color:gold;
-text-decoration:none;
-}
+    .table-wrap{
+      overflow-x:auto;
+      border:1px solid #222;
+      border-radius:12px;
+    }
 
-</style>
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:850px;
+      background:#111;
+    }
+
+    th, td{
+      padding:12px;
+      border-bottom:1px solid #222;
+      text-align:center;
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    th{
+      color:gold;
+      background:#171717;
+    }
+
+    td{
+      color:#ddd;
+      line-height:1.7;
+    }
+
+    .status-pending{
+      color:#f59e0b;
+      font-weight:bold;
+    }
+
+    .status-success{
+      color:#22c55e;
+      font-weight:bold;
+    }
+
+    .status-rejected{
+      color:#ef4444;
+      font-weight:bold;
+    }
+
+    .empty{
+      text-align:center;
+      color:#aaa;
+      padding:30px 10px;
+      background:#181818;
+      border-radius:12px;
+    }
+
+    .small{
+      font-size:12px;
+      color:#aaa;
+      word-break:break-all;
+    }
+
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#1e1e1e;
+      border:1px solid #333;
+      color:#fff;
+      font-size:12px;
+    }
+  </style>
 </head>
-
 <body>
 
 <div class="container">
+  <h2>سجل العمليات</h2>
+  <p>هنا تظهر جميع العمليات المحفوظة محليًا داخل المنصة التجريبية.</p>
 
-<h2>سجل العمليات</h2>
+  <div class="top-actions">
+    <a class="primary" href="deposit.html">إضافة إيداع جديد</a>
+    <a class="secondary" href="dashboard.html">العودة للوحة المستخدم</a>
+    <button class="secondary" onclick="clearHistory()">مسح السجل</button>
+  </div>
 
-<table>
-
-<thead>
-<tr>
-<th>العملية</th>
-<th>المبلغ</th>
-<th>التاريخ</th>
-<th>الحالة</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr>
-<td>إيداع</td>
-<td>$500</td>
-<td>2026-03-06</td>
-<td class="status-success">مكتمل</td>
-</tr>
-
-<tr>
-<td>سحب</td>
-<td>$120</td>
-<td>2026-03-05</td>
-<td class="status-pending">قيد المراجعة</td>
-</tr>
-
-<tr>
-<td>إيداع</td>
-<td>$300</td>
-<td>2026-03-04</td>
-<td class="status-success">مكتمل</td>
-</tr>
-
-</tbody>
-
-</table>
-
-<a href="dashboard.html">العودة إلى لوحة المستخدم</a>
-
+  <div id="historyContent"></div>
 </div>
+
+<script>
+  const savedUser = localStorage.getItem("skgUser");
+  if (!savedUser) {
+    window.location.href = "login.html";
+  }
+
+  function formatDate(dateString) {
+    try {
+      const d = new Date(dateString);
+      return d.toLocaleString("ar-EG");
+    } catch (e) {
+      return dateString || "-";
+    }
+  }
+
+  function getStatusClass(status) {
+    if (status === "قيد المراجعة") return "status-pending";
+    if (status === "مكتمل") return "status-success";
+    if (status === "مرفوض") return "status-rejected";
+    return "";
+  }
+
+  function renderHistory() {
+    const container = document.getElementById("historyContent");
+    const history = JSON.parse(localStorage.getItem("skgHistory") || "[]");
+
+    if (!history.length) {
+      container.innerHTML = `
+        <div class="empty">
+          لا توجد عمليات محفوظة حتى الآن.
+        </div>
+      `;
+      return;
+    }
+
+    let rows = "";
+
+    history.forEach((item, index) => {
+      rows += `
+        <tr>
+          <td>${index + 1}</td>
+          <td><span class="badge">${item.type || "-"}</span></td>
+          <td>${item.network || "-"}</td>
+          <td class="small">${item.address || "-"}</td>
+          <td>$${Number(item.amount || 0).toFixed(2)}</td>
+          <td class="${getStatusClass(item.status)}">${item.status || "-"}</td>
+          <td>${formatDate(item.createdAt)}</td>
+        </tr>
+      `;
+    });
+
+    container.innerHTML = `
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>النوع</th>
+              <th>الشبكة</th>
+              <th>العنوان</th>
+              <th>المبلغ</th>
+              <th>الحالة</th>
+              <th>التاريخ</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  function clearHistory() {
+    const ok = confirm("هل أنت متأكد من مسح سجل العمليات؟");
+    if (!ok) return;
+
+    localStorage.removeItem("skgHistory");
+    renderHistory();
+  }
+
+  renderHistory();
+</script>
 
 </body>
 </html>
