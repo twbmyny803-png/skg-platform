@@ -34,13 +34,22 @@
       font-size:28px;
     }
 
-    header a{
+    .header-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .header-actions a,
+    .header-actions button{
       color:#000;
       background:gold;
       text-decoration:none;
       padding:10px 16px;
+      border:none;
       border-radius:8px;
       font-weight:bold;
+      cursor:pointer;
     }
 
     .container{
@@ -66,6 +75,35 @@
     .welcome p{
       color:#ccc;
       line-height:1.8;
+    }
+
+    .user-info{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:16px;
+      margin-bottom:25px;
+    }
+
+    .info-card{
+      background:#111;
+      border:1px solid #222;
+      border-top:3px solid gold;
+      border-radius:12px;
+      padding:18px;
+      text-align:center;
+    }
+
+    .info-card h3{
+      color:#bbb;
+      font-size:16px;
+      margin-bottom:10px;
+    }
+
+    .info-card .value{
+      color:gold;
+      font-size:22px;
+      font-weight:bold;
+      word-break:break-word;
     }
 
     .balance-box{
@@ -140,62 +178,16 @@
       line-height:1.8;
       font-size:14px;
     }
-
-    .history{
-      background:#111;
-      border:1px solid #222;
-      border-radius:14px;
-      overflow:hidden;
-    }
-
-    .history-header{
-      background:#171717;
-      padding:16px 20px;
-      border-bottom:1px solid #222;
-    }
-
-    .history-header h3{
-      color:gold;
-      font-size:20px;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-    }
-
-    th, td{
-      padding:14px;
-      text-align:center;
-      border-bottom:1px solid #222;
-      font-size:14px;
-    }
-
-    th{
-      color:gold;
-      background:#121212;
-    }
-
-    td{
-      color:#ddd;
-    }
-
-    .status-success{
-      color:#22c55e;
-      font-weight:bold;
-    }
-
-    .status-pending{
-      color:#f59e0b;
-      font-weight:bold;
-    }
   </style>
 </head>
 <body>
 
   <header>
     <h1>منصة SKG</h1>
-    <a href="index.html">العودة للرئيسية</a>
+    <div class="header-actions">
+      <a href="index.html">الرئيسية</a>
+      <button onclick="logout()">تسجيل الخروج</button>
+    </div>
   </header>
 
   <div class="container">
@@ -203,14 +195,30 @@
     <div class="welcome">
       <h2>مرحباً بك في لوحة المستخدم</h2>
       <p>
-        هذه لوحة تجريبية لعرض شكل الحساب داخل منصة SKG، وتشمل الرصيد التجريبي،
-        وصفحات الإيداع والسحب، وسجل العمليات، وروابط الدعم.
+        هذه لوحة المستخدم التجريبية في منصة SKG، وهي الآن تعرض بيانات الحساب المسجل فعلياً من السيرفر.
       </p>
+    </div>
+
+    <div class="user-info">
+      <div class="info-card">
+        <h3>الاسم</h3>
+        <div class="value" id="userName">...</div>
+      </div>
+
+      <div class="info-card">
+        <h3>البريد الإلكتروني</h3>
+        <div class="value" id="userEmail">...</div>
+      </div>
+
+      <div class="info-card">
+        <h3>الحالة</h3>
+        <div class="value" id="userStatus">...</div>
+      </div>
     </div>
 
     <div class="balance-box">
       <h3>الرصيد التجريبي الحالي</h3>
-      <div class="balance">$ 2,450.00</div>
+      <div class="balance" id="userBalance">$0.00</div>
     </div>
 
     <div class="actions">
@@ -222,59 +230,42 @@
 
     <div class="cards">
       <div class="card">
-        <h3>الأرباح اليومية</h3>
-        <p>هذه مساحة تجريبية لعرض الأرباح أو العوائد التقديرية داخل حساب المستخدم بشكل مرئي ومنظم.</p>
+        <h3>معلومات الحساب</h3>
+        <p>يتم جلب بيانات الحساب الحالية من بيانات الدخول المخزنة بعد نجاح تسجيل الدخول.</p>
       </div>
 
       <div class="card">
-        <h3>رابط الإحالة</h3>
-        <p>يمكن هنا عرض رابط الإحالة أو الدعوات داخل نسخة المشروع التجريبية لتوضيح هيكل المنصة.</p>
+        <h3>عمليات تجريبية</h3>
+        <p>يمكنك الآن الانتقال إلى صفحات الإيداع والسحب وربطها لاحقاً بنفس الحساب المسجل.</p>
       </div>
 
       <div class="card">
-        <h3>تنبيهات الحساب</h3>
-        <p>هذه البطاقة مخصصة لإشعارات الحساب مثل تحديثات الرصيد أو حالة الطلبات أو رسائل الدعم.</p>
+        <h3>لوحة الأدمن</h3>
+        <p>يمكن للأدمن مراجعة المستخدمين والطلبات من خلال صفحة الأدمن التجريبية.</p>
       </div>
-    </div>
-
-    <div class="history">
-      <div class="history-header">
-        <h3>آخر العمليات</h3>
-      </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>النوع</th>
-            <th>المبلغ</th>
-            <th>التاريخ</th>
-            <th>الحالة</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>إيداع</td>
-            <td>$500</td>
-            <td>2026-03-06</td>
-            <td class="status-success">مكتمل</td>
-          </tr>
-          <tr>
-            <td>سحب</td>
-            <td>$120</td>
-            <td>2026-03-05</td>
-            <td class="status-pending">قيد المراجعة</td>
-          </tr>
-          <tr>
-            <td>إيداع</td>
-            <td>$300</td>
-            <td>2026-03-04</td>
-            <td class="status-success">مكتمل</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
 
   </div>
+
+  <script>
+    const savedUser = localStorage.getItem("skgUser");
+
+    if (!savedUser) {
+      window.location.href = "login.html";
+    } else {
+      const user = JSON.parse(savedUser);
+
+      document.getElementById("userName").textContent = user.fullName || "-";
+      document.getElementById("userEmail").textContent = user.email || "-";
+      document.getElementById("userStatus").textContent = user.status || "-";
+      document.getElementById("userBalance").textContent = "$" + Number(user.demoBalance || 0).toFixed(2);
+    }
+
+    function logout() {
+      localStorage.removeItem("skgUser");
+      window.location.href = "login.html";
+    }
+  </script>
 
 </body>
   </html>
