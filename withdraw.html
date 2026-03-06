@@ -6,56 +6,75 @@
 <title>السحب - SKG</title>
 
 <style>
-
 body{
 background:#000;
 color:#fff;
 font-family:Arial;
-text-align:center;
-padding:40px;
+padding:20px;
 }
 
 .box{
-background:#111;
-max-width:400px;
+max-width:500px;
 margin:auto;
-padding:30px;
-border-radius:12px;
+background:#111;
+padding:25px;
+border-radius:14px;
 border-top:3px solid gold;
 }
 
 h2{
 color:gold;
-margin-bottom:20px;
+text-align:center;
+margin-bottom:15px;
 }
 
-input{
+label{
+display:block;
+margin-top:14px;
+margin-bottom:6px;
+}
+
+input,select{
 width:100%;
 padding:12px;
-margin-top:10px;
 border:none;
-border-radius:6px;
+border-radius:8px;
 background:#222;
-color:white;
+color:#fff;
 }
 
 button{
-margin-top:20px;
-padding:12px;
+margin-top:18px;
 width:100%;
-background:gold;
+padding:13px;
 border:none;
-border-radius:6px;
+border-radius:8px;
+background:gold;
+color:#000;
 font-weight:bold;
+cursor:pointer;
+}
+
+.msg{
+margin-top:14px;
+text-align:center;
+}
+
+.success{
+color:#22c55e;
+}
+
+.error{
+color:#ef4444;
 }
 
 a{
 display:block;
 margin-top:20px;
+text-align:center;
 color:gold;
 text-decoration:none;
 }
-
 </style>
 </head>
 
@@ -63,19 +82,79 @@ text-decoration:none;
 
 <div class="box">
 
-<h2>سحب تجريبي</h2>
+<h2>طلب سحب</h2>
 
-<p>أدخل مبلغ السحب التجريبي</p>
+<label>اختر الشبكة</label>
+<select id="network">
+<option>USDT TRC20</option>
+<option>USDT BEP20</option>
+<option>USDT ERC20</option>
+<option>BTC</option>
+<option>ETH</option>
+</select>
 
-<input type="number" placeholder="المبلغ">
+<label>عنوان المحفظة</label>
+<input id="address" placeholder="اكتب عنوان محفظتك">
 
-<input type="text" placeholder="رقم المحفظة">
+<label>المبلغ</label>
+<input id="amount" type="number" placeholder="اكتب مبلغ السحب">
 
-<button>تأكيد السحب</button>
+<button onclick="submitWithdraw()">إرسال طلب السحب</button>
+
+<div id="msg" class="msg"></div>
 
 <a href="dashboard.html">العودة للوحة المستخدم</a>
 
 </div>
+
+<script>
+
+const savedUser = localStorage.getItem("skgUser")
+
+if(!savedUser){
+window.location="login.html"
+}
+
+function submitWithdraw(){
+
+const network=document.getElementById("network").value
+const address=document.getElementById("address").value
+const amount=Number(document.getElementById("amount").value)
+const msg=document.getElementById("msg")
+
+msg.className="msg"
+msg.textContent=""
+
+if(!address || !amount){
+msg.classList.add("error")
+msg.textContent="يرجى إدخال جميع البيانات"
+return
+}
+
+const history=JSON.parse(localStorage.getItem("skgHistory")||"[]")
+
+history.unshift({
+
+type:"سحب",
+network:network,
+address:address,
+amount:amount,
+status:"قيد المراجعة",
+createdAt:new Date().toISOString()
+
+})
+
+localStorage.setItem("skgHistory",JSON.stringify(history))
+
+msg.classList.add("success")
+msg.textContent="تم إرسال طلب السحب بنجاح"
+
+document.getElementById("address").value=""
+document.getElementById("amount").value=""
+
+}
+
+</script>
 
 </body>
 </html>
