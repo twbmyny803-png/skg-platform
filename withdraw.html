@@ -11,6 +11,7 @@ background:#000;
 color:#fff;
 font-family:Arial;
 padding:20px;
+margin:0;
 }
 
 .box{
@@ -41,6 +42,7 @@ border:none;
 border-radius:8px;
 background:#222;
 color:#fff;
+box-sizing:border-box;
 }
 
 button{
@@ -58,6 +60,7 @@ cursor:pointer;
 .msg{
 margin-top:14px;
 text-align:center;
+line-height:1.7;
 }
 
 .success{
@@ -108,52 +111,48 @@ text-decoration:none;
 </div>
 
 <script>
-
-const savedUser = localStorage.getItem("skgUser")
+const savedUser = localStorage.getItem("skgUser");
 
 if(!savedUser){
-window.location="login.html"
+  window.location = "login.html";
 }
 
 function submitWithdraw(){
+  const user = JSON.parse(savedUser);
+  const network = document.getElementById("network").value;
+  const address = document.getElementById("address").value.trim();
+  const amount = Number(document.getElementById("amount").value);
+  const msg = document.getElementById("msg");
 
-const network=document.getElementById("network").value
-const address=document.getElementById("address").value
-const amount=Number(document.getElementById("amount").value)
-const msg=document.getElementById("msg")
+  msg.className = "msg";
+  msg.textContent = "";
 
-msg.className="msg"
-msg.textContent=""
+  if(!address || !amount || amount <= 0){
+    msg.classList.add("error");
+    msg.textContent = "يرجى إدخال جميع البيانات بشكل صحيح";
+    return;
+  }
 
-if(!address || !amount){
-msg.classList.add("error")
-msg.textContent="يرجى إدخال جميع البيانات"
-return
+  const history = JSON.parse(localStorage.getItem("skgHistory") || "[]");
+
+  history.unshift({
+    type: "سحب",
+    email: user.email,
+    network: network,
+    address: address,
+    amount: amount,
+    status: "قيد المراجعة",
+    createdAt: new Date().toISOString()
+  });
+
+  localStorage.setItem("skgHistory", JSON.stringify(history));
+
+  msg.classList.add("success");
+  msg.textContent = "تم إرسال طلب السحب بنجاح ✅";
+
+  document.getElementById("address").value = "";
+  document.getElementById("amount").value = "";
 }
-
-const history=JSON.parse(localStorage.getItem("skgHistory")||"[]")
-
-history.unshift({
-
-type:"سحب",
-network:network,
-address:address,
-amount:amount,
-status:"قيد المراجعة",
-createdAt:new Date().toISOString()
-
-})
-
-localStorage.setItem("skgHistory",JSON.stringify(history))
-
-msg.classList.add("success")
-msg.textContent="تم إرسال طلب السحب بنجاح"
-
-document.getElementById("address").value=""
-document.getElementById("amount").value=""
-
-}
-
 </script>
 
 </body>
