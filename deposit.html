@@ -360,6 +360,7 @@
         saveDepositToHistory({
           id: data.request.id,
           type: "إيداع",
+          email: user.email,
           network: depositAddresses[network].title,
           address: depositAddresses[network].address,
           amount: amount,
@@ -379,4 +380,4 @@
 </script>
 
 </body>
-  </html>
+</html>
