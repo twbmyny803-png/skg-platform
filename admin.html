@@ -4,51 +4,210 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>لوحة الأدمن - SKG</title>
+
   <style>
-    *{box-sizing:border-box;font-family:Arial,sans-serif}
-    body{margin:0;background:#000;color:#fff;padding:20px}
-    .wrap{max-width:1100px;margin:auto}
-    .top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
-    .top h1{color:gold;margin:0}
-    .top a,.top button{
-      background:gold;color:#000;border:none;border-radius:8px;
-      padding:10px 14px;font-weight:bold;text-decoration:none;cursor:pointer
+    *{
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
     }
+
+    body{
+      margin:0;
+      background:#000;
+      color:#fff;
+      padding:20px;
+    }
+
+    .wrap{
+      max-width:1200px;
+      margin:auto;
+    }
+
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:20px;
+    }
+
+    .top h1{
+      color:gold;
+      margin:0;
+      font-size:30px;
+    }
+
+    .top a,
+    .top button{
+      background:gold;
+      color:#000;
+      border:none;
+      border-radius:8px;
+      padding:10px 14px;
+      font-weight:bold;
+      text-decoration:none;
+      cursor:pointer;
+    }
+
     .card{
-      background:#111;border:1px solid #222;border-top:3px solid gold;
-      border-radius:14px;padding:18px;margin-bottom:18px
+      background:#111;
+      border:1px solid #222;
+      border-top:3px solid gold;
+      border-radius:14px;
+      padding:18px;
+      margin-bottom:18px;
     }
-    .card h2{margin:0 0 10px;color:gold;font-size:22px}
-    .note{color:#bbb;line-height:1.7;font-size:14px}
-    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:18px}
-    .stat{background:#111;border:1px solid #222;border-top:3px solid gold;border-radius:12px;padding:16px;text-align:center}
-    .stat .v{color:gold;font-size:30px;font-weight:bold}
-    .stat .k{color:#bbb;margin-top:6px}
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+
+    .card h2{
+      margin:0 0 10px;
+      color:gold;
+      font-size:22px;
+    }
+
+    .note{
+      color:#bbb;
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .stat{
+      background:#111;
+      border:1px solid #222;
+      border-top:3px solid gold;
+      border-radius:12px;
+      padding:16px;
+      text-align:center;
+    }
+
+    .stat .v{
+      color:gold;
+      font-size:30px;
+      font-weight:bold;
+    }
+
+    .stat .k{
+      color:#bbb;
+      margin-top:6px;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
     .toolbar button{
-      background:#333;color:#fff;border:none;border-radius:8px;padding:10px 12px;cursor:pointer
+      background:#333;
+      color:#fff;
+      border:none;
+      border-radius:8px;
+      padding:10px 12px;
+      cursor:pointer;
     }
-    .table-wrap{overflow-x:auto;border:1px solid #222;border-radius:12px}
-    table{width:100%;border-collapse:collapse;min-width:900px;background:#111}
-    th,td{padding:12px;text-align:center;border-bottom:1px solid #222;font-size:14px;vertical-align:top}
-    th{background:#171717;color:gold}
-    td{color:#ddd}
-    .small{font-size:12px;color:#aaa;word-break:break-all}
-    .pending{color:#f59e0b;font-weight:bold}
-    .approved{color:#22c55e;font-weight:bold}
-    .rejected{color:#ef4444;font-weight:bold}
-    .row-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-    .approve,.reject{
-      border:none;border-radius:8px;padding:8px 10px;font-weight:bold;cursor:pointer
+
+    .table-wrap{
+      overflow-x:auto;
+      border:1px solid #222;
+      border-radius:12px;
     }
-    .approve{background:#22c55e;color:#000}
-    .reject{background:#ef4444;color:#fff}
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1100px;
+      background:#111;
+    }
+
+    th, td{
+      padding:12px;
+      text-align:center;
+      border-bottom:1px solid #222;
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    th{
+      background:#171717;
+      color:gold;
+    }
+
+    td{
+      color:#ddd;
+      line-height:1.7;
+    }
+
+    .small{
+      font-size:12px;
+      color:#aaa;
+      word-break:break-all;
+    }
+
+    .pending{
+      color:#f59e0b;
+      font-weight:bold;
+    }
+
+    .approved{
+      color:#22c55e;
+      font-weight:bold;
+    }
+
+    .rejected{
+      color:#ef4444;
+      font-weight:bold;
+    }
+
+    .row-actions{
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .approve,
+    .reject{
+      border:none;
+      border-radius:8px;
+      padding:8px 10px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .approve{
+      background:#22c55e;
+      color:#000;
+    }
+
+    .reject{
+      background:#ef4444;
+      color:#fff;
+    }
+
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#1e1e1e;
+      border:1px solid #333;
+      color:#fff;
+      font-size:12px;
+    }
   </style>
 </head>
 <body>
 
 <script>
   var password = prompt("ادخل كلمة مرور الأدمن");
+
   if (password !== "obdo0000") {
     document.body.innerHTML = "<h2 style='color:red;text-align:center;margin-top:120px;'>🚫 غير مسموح بالدخول</h2>";
     throw new Error("Access Denied");
@@ -66,8 +225,8 @@
   <div class="card">
     <h2>لوحة إدارة تجريبية</h2>
     <div class="note">
-      هذه الصفحة تجريبية فقط. تعرض طلبات الإيداع والسحب المحفوظة محليًا داخل المتصفح، ويمكن تغيير حالتها إلى
-      <b>مقبول</b> أو <b>مرفوض</b> لأغراض العرض فقط.
+      هذه الصفحة تعرض العمليات المحفوظة داخل السجل المحلي للمشروع التجريبي.
+      يمكن من هنا مراجعة الطلبات وتغيير حالتها إلى <b>مقبول</b> أو <b>مرفوض</b>.
     </div>
   </div>
 
@@ -76,14 +235,17 @@
       <div class="v" id="totalOps">0</div>
       <div class="k">إجمالي العمليات</div>
     </div>
+
     <div class="stat">
       <div class="v" id="pendingOps">0</div>
       <div class="k">قيد المراجعة</div>
     </div>
+
     <div class="stat">
       <div class="v" id="approvedOps">0</div>
       <div class="k">مقبول</div>
     </div>
+
     <div class="stat">
       <div class="v" id="rejectedOps">0</div>
       <div class="k">مرفوض</div>
@@ -105,6 +267,7 @@
           <tr>
             <th>#</th>
             <th>النوع</th>
+            <th>البريد الإلكتروني</th>
             <th>الشبكة</th>
             <th>العنوان</th>
             <th>المبلغ</th>
@@ -146,6 +309,7 @@
   function approveOp(index) {
     const ops = getOps();
     if (!ops[index]) return;
+
     ops[index].status = "مقبول";
     saveOps(ops);
     renderOps();
@@ -154,6 +318,7 @@
   function rejectOp(index) {
     const ops = getOps();
     if (!ops[index]) return;
+
     ops[index].status = "مرفوض";
     saveOps(ops);
     renderOps();
@@ -162,6 +327,7 @@
   function clearAll() {
     const ok = confirm("هل تريد مسح كل السجل التجريبي؟");
     if (!ok) return;
+
     localStorage.removeItem("skgHistory");
     renderOps();
   }
@@ -178,7 +344,7 @@
     if (!ops.length) {
       body.innerHTML = `
         <tr>
-          <td colspan="8" style="color:#aaa;padding:30px;">لا توجد عمليات محفوظة حتى الآن</td>
+          <td colspan="9" style="color:#aaa;padding:30px;">لا توجد عمليات محفوظة حتى الآن</td>
         </tr>
       `;
       return;
@@ -187,7 +353,8 @@
     body.innerHTML = ops.map((item, index) => `
       <tr>
         <td>${index + 1}</td>
-        <td>${item.type || "-"}</td>
+        <td><span class="badge">${item.type || "-"}</span></td>
+        <td>${item.email || "-"}</td>
         <td>${item.network || "-"}</td>
         <td class="small">${item.address || "-"}</td>
         <td>$${Number(item.amount || 0).toFixed(2)}</td>
